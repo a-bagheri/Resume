@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of a dual-career engineer: hardware design & thermal analysis meets full-stack software development.">
+  <title>Amir Hossein &mdash; Hardware &amp; Software Portfolio</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129302;</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar" id="navbar">
+    <nav class="container navbar__inner" aria-label="Primary navigation">
+      <a href="#hero" class="navbar__logo mono" aria-label="Home">
+        <span class="accent-hw">amir</span><span class="accent-sw">_</span>dev
+      </a>
+      <ul class="navbar__links" id="nav-links">
+        <li><a href="#hero" class="nav-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <!-- Sliding toggle switch (dark/light) -->
+      <label class="toggle" for="theme-toggle">
+      <!-- Sun icon (left) — active in light mode -->
+      <svg class="toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <input type="checkbox" class="toggle__input" id="theme-toggle" role="switch" aria-label="Toggle dark / light mode" title="Toggle theme">
+      <span class="toggle__thumb" aria-hidden="true"></span>
+      <span class="toggle__track" aria-hidden="true"></span>
+      <!-- Moon icon (right) — active in dark mode -->
+      <svg class="toggle__icon toggle__icon--right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </label>
+      <button class="nav-burger" id="nav-burger" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ================= HERO SECTION (dual-intro) ================= -->
+    <section class="hero" id="hero">
+      <div class="container hero__grid">
+
+        <!-- Identity / typed-role intro -->
+        <div class="hero__intro">
+          <p class="mono hero__eyebrow"><span class="accent-sw">$</span> whoami</p>
+          <h1 class="hero__title">Amir Hossein</h1>
+          <h2 class="hero__role-wrap" aria-live="polite">
+            <span class="hero__typed mono" id="typed-role">&nbsp;</span><span class="hero__caret" id="typed-caret" aria-hidden="true">_</span>
+          </h2>
+          <p class="hero__sub">
+            Dual-career engineer &mdash; designing space-rated hardware and thermal systems
+            <span class="accent-hw">on the ground</span>, shipping full-stack software
+            <span class="accent-sw">in the cloud</span>.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#portfolio">View Projects</a>
+            <!-- REPLACE href with your real resume PDF path -->
+            <a class="btn btn--resume" href="resume.pdf" target="_blank" rel="noopener">
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download Resume
+            </a>
+          </div>
+          <p class="mono hero__sysline" aria-hidden="true">
+            <span class="accent-sw">$</span> cat systems.txt<br>
+            &gt; hardware: <span class="accent-hw">thermal | CAD | ECSS</span><br>
+            &gt; software: <span class="accent-sw">node | python | web</span>
+          </p>
+        </div>
+
+        <!-- Portrait: round photo with glow ring -->
+        <div class="hero__portrait" role="img" aria-label="Profile picture">
+          <div class="portrait-glow" aria-hidden="true"></div>
+          <div class="portrait-ring" aria-hidden="true"></div>
+          <!-- Frame wraps the photo so the hover shine can be a pseudo-element -->
+          <div class="portrait-frame">
+            <!-- REPLACE src: put your real photo here -->
+            <img class="portrait" src="https://avatars.githubusercontent.com/u/33522795?v=4" alt="Profile portrait of Amir Hossein">
+          </div>
+          <span class="portrait-caption mono" aria-hidden="true">&lt;amir_hb /&gt;</span>
+        </div>
+
+      </div>
+      <div class="hero__glow hero__glow--hw" aria-hidden="true"></div>
+      <div class="hero__glow hero__glow--sw" aria-hidden="true"></div>
+    </section>
+
+    <!-- ================= ABOUT SECTION ================= -->
+    <section class="section about" id="about">
+      <div class="container">
+        <h2 class="section__title"><span class="mono accent-hw">01</span> / About</h2>
+
+        <!-- Hardware journey paragraph -->
+        <article class="about__block about__block--hw reveal">
+          <h3 class="about__label"><span class="badge badge--hw">Hardware</span> The thermal path</h3>
+          <p>
+            My career began where physics meets spaceflight: designing and analyzing
+            <strong>thermal control systems</strong> for aerospace hardware. I built detailed
+            <strong>SINDA/FLUINT</strong> and <strong>Thermal Desktop</strong> models to predict
+            orbital and transient temperature profiles, and drove every design through
+            <strong>ECSS</strong> verification. Along the way I modelled mechanical enclosures
+            in <strong>Rhino</strong> and <strong>Fusion 360</strong> &mdash; learning that a
+            component which survives on paper must also survive machining, assembly and launch.
+          </p>
+        </article>
+
+        <!-- Software journey paragraph -->
+        <article class="about__block about__block--sw reveal">
+          <h3 class="about__label"><span class="badge badge--sw">Software</span> The code path</h3>
+          <p>
+            The same engineering instinct &mdash; model, iterate, verify &mdash; pulled me into
+            software. I moved from thermal scripts to <strong>full-stack development</strong>,
+            shipping applications with <strong>Node.js</strong> and <strong>Python</strong>, and
+            tooling my own network with <strong>Sing-box</strong> and <strong>V2RayN</strong>.
+            Today I treat systems the way I treated spacecraft: instrumented, tested, and
+            designed to stay reliable under load.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= SKILLS SECTION (two-column matrix) ================= -->
+    <section class="section skills" id="skills">
+      <div class="container">
+        <h2 class="section__title"><span class="mono accent-sw">02</span> / Skill Matrix</h2>
+        <p class="section__lede">Two columns, one engineer &mdash; hardware depth and software breadth.</p>
+
+        <div class="skills__grid">
+          <!-- ============ Hardware / Engineering column ============ -->
+          <div class="skills__col skills__col--hw reveal">
+            <h3 class="skills__col-title"><span class="accent-hw mono">[ hw ]</span> Hardware &amp; Engineering</h3>
+            <ul class="skills__list">
+              <li class="skill">
+                <div class="skill__row">
+                  <span class="skill__name">Thermal Desktop / SINDA-FLUINT</span>
+                  <span class="skill__pct mono">90%</span>
+                </div>
+                <div class="skill__bar" role="progressbar" aria-label="Thermal Desktop / SINDA-FLUINT proficiency" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><span style="--pct: 90%"></span></div>
+              </li>
+              <li class="skill">
+                <div class="skill__row">
+                  <span class="skill__name">ECSS Design &amp; Verification</span>
+                  <span class="skill__pct mono">85%</span>
+                </div>
+                <div class="skill__bar" role="progressbar" aria-label="ECSS Design and Verification proficiency" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><span style="--pct: 85%"></span></div>
+              </li>
+              <li class="skill">
+                <div class="skill__row">
+                  <span class="skill__name">CAD &mdash; Rhino / Fusion 360</span>
+                  <span class="skill__pct mono">80%</span>
+                </div>
+                <div class="skill__bar" role="progressbar" aria-label="CAD Rhino and Fusion 360 proficiency" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"><span style="--pct: 80%"></span></div>
+              </li>
+              <li class="skill">
+                <div class="skill__row">
+                  <span class="skill__name">Thermal Analysis &amp; Simulation</span>
+                  <span class="skill__pct mono">88%</span>
+                </div>
+                <div class="skill__bar" role="progressbar" aria-label="Thermal Analysis and Simulation proficiency" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"><span style="--pct: 88%"></span></div>
+              </li>
+              <li class="skill">
+                <div class="skill__row">
+                  <span class="skill__name">MATLAB / Numerical Methods</span>
+                  <span class="skill__pct mono">75%</span>
+                </div>
+                <div class="skill__bar" role="progressbar" aria-label="MATLAB and Numerical Methods proficiency" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span style="--pct: 75%"></span></div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- ============ Software / Development column ============ -->
+          <div class="skills__col skills__col--sw reveal">
+            <h3 class="skills__col-title"><span class="accent-sw mono">[ sw ]</span> Software &amp; Development</h3>
+            <ul class="skills__list">
+              <li class="skill">
+                <div class="skill__row">
+                  <span class="skill__name">Full Stack &mdash; Node.js / Express</span>
+                  <span class="skill__pct mono">88%</span>
+                </div>
+                <div class="skill__bar" role="progressbar" aria-label="Full Stack Node.js Express proficiency" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"><span style="--pct: 88%"></span></div>
+              </li>
+              <li class="skill">
+                <div class="skill__row">
+                  <span class="skill__name">Python / Automation</span>
+                  <span class="skill__pct mono">90%</span>
+                </div>
+                <div class="skill__bar" role="progressbar" aria-label="Python Automation proficiency" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><span style="--pct: 90%"></span></div>
+              </li>
+              <li class="skill">
+                <div class="skill__row">
+                  <span class="skill__name">Frontend &mdash; HTML / CSS / JS</span>
+                  <span class="skill__pct mono">85%</span>
+                </div>
+                <div class="skill__bar" role="progressbar" aria-label="Frontend HTML CSS JavaScript proficiency" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><span style="--pct: 85%"></span></div>
+              </li>
+              <li class="skill">
+                <div class="skill__row">
+                  <span class="skill__name">Network Tools &mdash; Sing-box / V2RayN</span>
+                  <span class="skill__pct mono">78%</span>
+                </div>
+                <div class="skill__bar" role="progressbar" aria-label="Network Tools Sing-box V2RayN proficiency" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"><span style="--pct: 78%"></span></div>
+              </li>
+              <li class="skill">
+                <div class="skill__row">
+                  <span class="skill__name">Databases &amp; APIs</span>
+                  <span class="skill__pct mono">80%</span>
+                </div>
+                <div class="skill__bar" role="progressbar" aria-label="Databases and APIs proficiency" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"><span style="--pct: 80%"></span></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PORTFOLIO SECTION (filterable) ================= -->
+    <section class="section portfolio" id="portfolio">
+      <div class="container">
+        <h2 class="section__title"><span class="mono accent-hw">03</span> / Portfolio</h2>
+        <p class="section__lede">Hardware, software, and the space where they meet.</p>
+
+        <!-- Filter buttons -->
+        <div class="filters" role="group" aria-label="Filter projects by category">
+          <button class="filter-btn is-active" type="button" data-filter="all">All</button>
+          <button class="filter-btn" type="button" data-filter="hardware">Hardware / CAD</button>
+          <button class="filter-btn" type="button" data-filter="software">Software / Automation</button>
+        </div>
+
+        <p class="mono portfolio__count" id="project-count" aria-live="polite"></p>
+
+        <!-- ================================================================
+             PROJECTS  — to add or edit a project, copy one <article> block
+             and change: data-category, the <img src>, title, text, tags,
+             badge, and button.  data-category must be "hardware" or "software".
+             ================================================================ -->
+        <div class="projects" id="projects-grid">
+
+          <!-- PROJECT 01 — HARDWARE -->
+          <article class="project-card" data-category="hardware">
+            <div class="project-card__media">
+              <!-- REPLACE: put your real render / photo path here -->
+              <img src="https://placehold.co/800x480/1e293b/f8fafc?text=Satellite+Thermal+Model" alt="Thermal model of a small satellite" loading="lazy">
+              <span class="badge badge--hw project-card__badge">Hardware</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">Microsat Thermal Control</h3>
+              <p class="project-card__desc">Steady-state and transient SINDA/FLUINT model for a 6U satellite bus; margins demonstrated against ECSS-CSS-31 hot/cold cases.</p>
+              <ul class="project-card__tags mono">
+                <li>Thermal Analysis</li>
+                <li>SINDA/FLUINT</li>
+                <li>ECSS</li>
+              </ul>
+              <a class="btn btn--sm" href="#" data-project-link>View Details</a>
+            </div>
+          </article>
+
+          <!-- PROJECT 02 — SOFTWARE -->
+          <article class="project-card" data-category="software">
+            <div class="project-card__media">
+              <!-- REPLACE: put your real screenshot path here -->
+              <img src="https://placehold.co/800x480/134e4a/f0fdfa?text=Deploy+Dashboard" alt="Dashboard screenshot" loading="lazy">
+              <span class="badge badge--sw project-card__badge">Software</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">Deploy Dashboard</h3>
+              <p class="project-card__desc">Node.js/Express app with live build status, webhook automation and a socket-driven event feed for a small CI pipeline.</p>
+              <ul class="project-card__tags mono">
+                <li>Node.js</li>
+                <li>Express</li>
+                <li>WebSockets</li>
+              </ul>
+              <a class="btn btn--sm" href="#" data-project-link>Live Demo</a>
+            </div>
+          </article>
+
+          <!-- PROJECT 03 — HARDWARE -->
+          <article class="project-card" data-category="hardware">
+            <div class="project-card__media">
+              <!-- REPLACE: put your real render / photo path here -->
+              <img src="https://placehold.co/800x480/1e293b/f8fafc?text=Enclosure+CAD+Assembly" alt="CAD assembly of an electronics enclosure" loading="lazy">
+              <span class="badge badge--hw project-card__badge">Hardware</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">Enclosure CAD Assembly</h3>
+              <p class="project-card__desc">Parameterised enclosure design in Fusion 360: DFM-driven wall reliefs, thermal pad seats and board stack-up clearance.</p>
+              <ul class="project-card__tags mono">
+                <li>CAD</li>
+                <li>Fusion 360</li>
+                <li>DFM</li>
+              </ul>
+              <a class="btn btn--sm" href="#" data-project-link>View Details</a>
+            </div>
+          </article>
+
+          <!-- PROJECT 04 — SOFTWARE -->
+          <article class="project-card" data-category="software">
+            <div class="project-card__media">
+              <!-- REPLACE: put your real screenshot path here -->
+              <img src="https://placehold.co/800x480/134e4a/f0fdfa?text=Sing-box+Config+Tool" alt="Network configuration tool screenshot" loading="lazy">
+              <span class="badge badge--sw project-card__badge">Software</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">Sing-box Config Tool</h3>
+              <p class="project-card__desc">Python CLI that generates, validates and rotates Sing-box/V2RayN client configurations from a YAML source of truth.</p>
+              <ul class="project-card__tags mono">
+                <li>Python</li>
+                <li>Automation</li>
+                <li>Sing-box</li>
+              </ul>
+              <a class="btn btn--sm" href="#" data-project-link>Live Demo</a>
+            </div>
+          </article>
+
+          <!-- PROJECT 05 — HARDWARE -->
+          <article class="project-card" data-category="hardware">
+            <div class="project-card__media">
+              <!-- REPLACE: put your real render / photo path here -->
+              <img src="https://placehold.co/800x480/1e293b/f8fafc?text=Radiator+Fin+Analysis" alt="Thermal contour plot of a radiator fin" loading="lazy">
+              <span class="badge badge--hw project-card__badge">Hardware</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">Radiator Fin Optimisation</h3>
+              <p class="project-card__desc">Parametric study of fin geometry vs. radiator mass and view factor; converged on a 22% mass saving within thermal budget.</p>
+              <ul class="project-card__tags mono">
+                <li>Thermal Analysis</li>
+                <li>MATLAB</li>
+                <li>Optimisation</li>
+              </ul>
+              <a class="btn btn--sm" href="#" data-project-link>View Details</a>
+            </div>
+          </article>
+
+          <!-- PROJECT 06 — SOFTWARE -->
+          <article class="project-card" data-category="software">
+            <div class="project-card__media">
+              <!-- REPLACE: put your real screenshot path here -->
+              <img src="https://placehold.co/800x480/134e4a/f0fdfa?text=Thermal+Report+Generator" alt="Generated thermal report preview" loading="lazy">
+              <span class="badge badge--sw project-card__badge">Software</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">Thermal Report Generator</h3>
+              <p class="project-card__desc">Python automation that parses solver outputs and emits styled PDF/HTML verification reports &mdash; the bridge between my two worlds.</p>
+              <ul class="project-card__tags mono">
+                <li>Python</li>
+                <li>Automation</li>
+                <li>Report Gen</li>
+              </ul>
+              <a class="btn btn--sm" href="#" data-project-link>Live Demo</a>
+            </div>
+          </article>
+
+          <!-- PROJECT 07 — HARDWARE -->
+          <article class="project-card" data-category="hardware">
+            <div class="project-card__media">
+              <!-- REPLACE: put your real render / photo path here -->
+              <img src="https://placehold.co/800x480/1e293b/f8fafc?text=Battery+Cell+Thermal" alt="Battery pack thermal model" loading="lazy">
+              <span class="badge badge--hw project-card__badge">Hardware</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">Battery Pack Thermal Model</h3>
+              <p class="project-card__desc">Lumped-parameter model of cell-to-radiator coupling; predicted worst-case cell temperature under 3C discharge within 4&deg;C of test.</p>
+              <ul class="project-card__tags mono">
+                <li>Thermal Analysis</li>
+                <li>Modelling</li>
+                <li>Test Correlation</li>
+              </ul>
+              <a class="btn btn--sm" href="#" data-project-link>View Details</a>
+            </div>
+          </article>
+
+          <!-- PROJECT 08 — SOFTWARE -->
+          <article class="project-card" data-category="software">
+            <div class="project-card__media">
+              <!-- REPLACE: put your real screenshot path here -->
+              <img src="https://placehold.co/800x480/134e4a/f0fdfa?text=CI+Watcher+Bot" alt="Chat bot notification preview" loading="lazy">
+              <span class="badge badge--sw project-card__badge">Software</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">CI Watcher Bot</h3>
+              <p class="project-card__desc">Automation bot that watches repository pipelines and posts failure summaries with logs to a team channel before anyone opens a browser.</p>
+              <ul class="project-card__tags mono">
+                <li>Automation</li>
+                <li>APIs</li>
+                <li>Bots</li>
+              </ul>
+              <a class="btn btn--sm" href="#" data-project-link>Live Demo</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIENCE TIMELINE ================= -->
+    <section class="section experience" id="experience">
+      <div class="container">
+        <h2 class="section__title"><span class="mono accent-sw">04</span> / Experience</h2>
+
+        <ol class="timeline">
+          <!-- ============================================================
+               TIMELINE ENTRY — to edit, change the badge, role, company,
+               dates, tags, and description text. Add new entries by copying
+               one <li class="timeline__item"> block.
+               ============================================================ -->
+
+          <!-- SOFTWARE ENTRY -->
+          <li class="timeline__item timeline__item--sw reveal">
+            <div class="timeline__marker" aria-hidden="true"></div>
+            <div class="timeline__card">
+              <div class="timeline__head">
+                <span class="badge badge--sw">Software Development</span>
+                <span class="mono timeline__dates">2024 &mdash; Present</span>
+              </div>
+              <h3 class="timeline__role">Full-Stack Developer <span class="timeline__company">@ Freelance / Own Projects</span></h3>
+              <p class="timeline__desc">Building and maintaining full-stack web applications; automating deployment pipelines; designing network tooling with Sing-box and V2RayN for reliability and privacy.</p>
+              <ul class="timeline__tags mono">
+                <li>Node.js</li>
+                <li>Python</li>
+                <li>Automation</li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- HARDWARE ENTRY -->
+          <li class="timeline__item timeline__item--hw reveal">
+            <div class="timeline__marker" aria-hidden="true"></div>
+            <div class="timeline__card">
+              <div class="timeline__head">
+                <span class="badge badge--hw">Hardware Engineering</span>
+                <span class="mono timeline__dates">2021 &mdash; 2024</span>
+              </div>
+              <h3 class="timeline__role">Thermal &amp; Mechanical Engineer <span class="timeline__company">@ Aerospace Projects</span></h3>
+              <p class="timeline__desc">Led thermal control subsystem analysis: built SINDA/FLUINT and Thermal Desktop models, ran ECSS verification campaigns, and produced CAD designs for flight and ground hardware.</p>
+              <ul class="timeline__tags mono">
+                <li>ECSS</li>
+                <li>SINDA/FLUINT</li>
+                <li>CAD</li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- HARDWARE ENTRY -->
+          <li class="timeline__item timeline__item--hw reveal">
+            <div class="timeline__marker" aria-hidden="true"></div>
+            <div class="timeline__card">
+              <div class="timeline__head">
+                <span class="badge badge--hw">Hardware Engineering</span>
+                <span class="mono timeline__dates">2018 &mdash; 2021</span>
+              </div>
+              <h3 class="timeline__role">Mechanical Design Engineer <span class="timeline__company">@ Industrial / R&amp;D</span></h3>
+              <p class="timeline__desc">Mechanical design and prototyping of enclosures and test fixtures; thermal simulation of electronics; hands-on machining and assembly validation.</p>
+              <ul class="timeline__tags mono">
+                <li>Rhino</li>
+                <li>Fusion 360</li>
+                <li>Simulation</li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- SOFTWARE ENTRY -->
+          <li class="timeline__item timeline__item--sw reveal">
+            <div class="timeline__marker" aria-hidden="true"></div>
+            <div class="timeline__card">
+              <div class="timeline__head">
+                <span class="badge badge--sw">Software Development</span>
+                <span class="mono timeline__dates">2016 &mdash; 2018</span>
+              </div>
+              <h3 class="timeline__role">Automation &amp; Tools Developer <span class="timeline__company">@ Side Projects / Research</span></h3>
+              <p class="timeline__desc">Python tooling for engineering teams: data post-processing, report generation, and internal dashboards that shortened analysis turnaround by hours.</p>
+              <ul class="timeline__tags mono">
+                <li>Python</li>
+                <li>Automation</li>
+                <li>Dashboards</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT SECTION ================= -->
+    <section class="section contact" id="contact">
+      <div class="container contact__inner">
+        <h2 class="section__title"><span class="mono accent-hw">05</span> / Contact</h2>
+        <p class="contact__lede">
+          Building spacecraft hardware or shipping software &mdash; either way, I'd love to hear about it.
+        </p>
+        <div class="contact__channels">
+          <!-- REPLACE: point these links at your real profiles -->
+          <a class="contact__card" href="mailto:hello@example.com" rel="noopener">
+            <span class="mono contact__card-icon" aria-hidden="true">@</span>
+            <span><strong>Email</strong><small class="mono">hello@example.com</small></span>
+          </a>
+          <a class="contact__card" href="https://github.com/yourusername" target="_blank" rel="noopener">
+            <span class="mono contact__card-icon" aria-hidden="true">{ }</span>
+            <span><strong>GitHub</strong><small class="mono">github.com/yourusername</small></span>
+          </a>
+          <a class="contact__card" href="https://www.linkedin.com/in/yourusername" target="_blank" rel="noopener">
+            <span class="mono contact__card-icon" aria-hidden="true">in</span>
+            <span><strong>LinkedIn</strong><small class="mono">/in/yourusername</small></span>
+          </a>
+        </div>
+        <p class="mono contact__footer">// built with vanilla html, css &amp; js &mdash; no frameworks harmed</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="mono footer__brand"><span class="accent-hw">hw</span> + <span class="accent-sw">sw</span> &mdash; &copy; <span id="year">2026</span> Amir Hossein</p>
+
+      <!-- REPLACE: point these at your real profiles -->
+      <ul class="footer__socials" aria-label="Social links">
+        <li>
+          <a class="footer__social" href="https://github.com/yourusername" target="_blank" rel="noopener" aria-label="GitHub profile">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14 0 1.54-.01 2.79-.01 3.17 0 .31.21.67.8.55A11.52 11.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a class="footer__social" href="https://www.linkedin.com/in/yourusername" target="_blank" rel="noopener" aria-label="LinkedIn profile">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a class="footer__social" href="mailto:hello@example.com" aria-label="Send an email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="m22 7-10 5L2 7"></path>
+            </svg>
+          </a>
+        </li>
+      </ul>
+
+      <a href="#hero" class="mono footer__top">back to top ^</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1330 @@
+/* ============================================================
+   PORTFOLIO — "Technical Elegance" theme
+   ------------------------------------------------------------
+   TABLE OF CONTENTS
+   01. CSS Variables / Themes (dark + light)
+   02. Reset & Base
+   03. Utilities (container, mono, badges, section titles)
+   04. Navbar
+   05. Hero (dual-intro split)
+   06. About
+   07. Skills matrix
+   08. Portfolio grid + filters
+   09. Timeline
+   10. Contact
+   11. Footer
+   12. Reveal animations
+   13. Responsive media queries
+   ============================================================ */
+
+
+/* ============================================================
+   01. CSS VARIABLES + THEMES
+   ------------------------------------------------------------
+   Theme switch = JS toggles `data-theme="light"` on <html>.
+   All components read these tokens only — no hardcoded colors.
+   ============================================================ */
+:root {
+  /* Brand accents (fixed across themes) */
+  --hardware-accent: #3b82f6;      /* Blue  */
+  --software-accent: #10b981;      /* Emerald */
+  --bg-dark: #0f172a;              /* Slate-900 base */
+
+  /* Palette tokens — DARK theme defaults */
+  --bg:          var(--bg-dark);
+  --bg-soft:     #16213c;
+  --surface:     #1e293b;
+  --surface-2:   #0b1120;
+  --border:      rgba(148, 163, 184, 0.16);
+  --text:        #e2e8f0;
+  --text-dim:    #94a3b8;
+  --text-faint:  #64748b;
+  --glow-hw:     rgba(59, 130, 246, 0.45);
+  --glow-sw:     rgba(16, 185, 129, 0.40);
+
+  /* Typography */
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  /* Layout */
+  --container-max: 1120px;
+  --radius: 12px;
+  --radius-sm: 8px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --speed: 0.35s;
+
+  /* Card hover glow (per-accent, used by .project-card) */
+  --card-glow: var(--glow-hw);
+  --card-glow-size: 0px;
+
+  /* Theme toggle switch */
+  --toggle-slider-bg: #475569;
+  --toggle-thumb: #f8fafc;
+}
+
+[data-theme="light"] {
+  --bg:        #f1f5f9;
+  --bg-soft:   #e2e8f0;
+  --surface:   #ffffff;
+  --surface-2: #f8fafc;
+  --border:    rgba(15, 23, 42, 0.12);
+  --text:      #0f172a;
+  --text-dim:  #334155;
+  --text-faint:#64748b;
+  --glow-hw:   rgba(59, 130, 246, 0.22);
+  --glow-sw:   rgba(16, 185, 129, 0.20);
+}
+
+
+/* ============================================================
+   02. RESET & BASE
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Compensate for fixed navbar when jumping to anchors */
+  scroll-padding-top: 84px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color var(--speed) var(--ease), color var(--speed) var(--ease);
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+::selection {
+  background: var(--hardware-accent);
+  color: #fff;
+}
+
+/* Slim custom scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-soft); }
+::-webkit-scrollbar-thumb { background: var(--text-faint); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--hardware-accent); }
+
+:focus-visible {
+  outline: 2px solid var(--hardware-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+
+/* ============================================================
+   03. UTILITIES
+   ============================================================ */
+.container {
+  width: min(100% - 2.5rem, var(--container-max));
+  margin-inline: auto;
+}
+
+.mono { font-family: var(--font-mono); }
+
+.accent-hw { color: var(--hardware-accent); }
+.accent-sw { color: var(--software-accent); }
+
+/* Section scaffolding */
+.section {
+  padding-block: clamp(3.5rem, 8vw, 6.5rem);
+}
+
+.section__title {
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.section__title .mono {
+  font-weight: 500;
+  font-size: 0.85em;
+  margin-right: 0.35em;
+}
+
+.section__lede {
+  color: var(--text-dim);
+  margin-bottom: 2.5rem;
+  max-width: 54ch;
+}
+
+/* Category badges */
+.badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3em 0.8em;
+  border-radius: 999px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+.badge--hw {
+  color: var(--hardware-accent);
+  border-color: var(--hardware-accent);
+  background: color-mix(in srgb, var(--hardware-accent) 12%, transparent);
+}
+
+.badge--sw {
+  color: var(--software-accent);
+  border-color: var(--software-accent);
+  background: color-mix(in srgb, var(--software-accent) 12%, transparent);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform var(--speed) var(--ease), box-shadow var(--speed) var(--ease), background-color var(--speed) var(--ease);
+}
+
+.btn--primary {
+  background: var(--hardware-accent);
+  color: #fff;
+  box-shadow: 0 6px 20px -6px var(--glow-hw);
+}
+
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px -6px var(--glow-hw);
+}
+
+.btn--ghost {
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn--ghost:hover {
+  border-color: var(--software-accent);
+  color: var(--software-accent);
+  transform: translateY(-2px);
+}
+
+/* "Download Resume" CTA */
+.btn--resume {
+  background: linear-gradient(135deg, var(--hardware-accent), var(--software-accent));
+  color: #fff;
+  box-shadow: 0 6px 20px -8px var(--glow-hw);
+  transition: transform var(--speed) var(--ease), box-shadow var(--speed) var(--ease), filter var(--speed) var(--ease);
+}
+
+.btn--resume:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px -10px var(--glow-sw), 0 0 0 1px color-mix(in srgb, var(--software-accent) 55%, transparent);
+  filter: brightness(1.08);
+}
+
+.btn__icon { width: 17px; height: 17px; }
+
+.btn--sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn--sm:hover {
+  border-color: var(--hardware-accent);
+  color: var(--hardware-accent);
+}
+
+
+/* ============================================================
+   04. NAVBAR
+   ============================================================ */
+.navbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  padding-block: 0.9rem;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--speed) var(--ease);
+}
+
+.navbar.is-scrolled {
+  border-bottom-color: var(--border);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.navbar__logo {
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.navbar__links {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.nav-link {
+  position: relative;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  transition: color var(--speed) var(--ease);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--hardware-accent), var(--software-accent));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--speed) var(--ease);
+}
+
+.nav-link:hover,
+.nav-link.is-active {
+  color: var(--text);
+}
+
+.nav-link:hover::after,
+.nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+/* ---- Sliding theme toggle switch ---- */
+.toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 62px;
+  height: 30px;
+  padding: 0 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--toggle-slider-bg);
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.toggle:hover { border-color: var(--hardware-accent); }
+
+/* Hidden native checkbox — state is read via :checked */
+.toggle__input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* Sliding thumb — the moving part */
+.toggle__thumb {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--toggle-thumb);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease;
+  z-index: 2;
+}
+
+.toggle__input:checked + .toggle__thumb { transform: translateX(30px); }
+
+/* Sun / moon icons inside the track — the visible icon is
+   always the one the switch will switch TO */
+.toggle__icon {
+  position: relative;
+  width: 13px;
+  height: 13px;
+  color: var(--toggle-thumb);
+  opacity: 0.55;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.toggle__icon--right { margin-left: auto; }
+
+.toggle__input:checked ~ .toggle__icon--right { opacity: 1; }
+.toggle__input:not(:checked) ~ .toggle__icon:first-child { opacity: 1; }
+
+.toggle:active .toggle__thumb { width: 26px; }
+
+/* Focus ring for keyboard users */
+.toggle__input:focus-visible + .toggle__thumb {
+  outline: 2px solid var(--hardware-accent);
+  outline-offset: 3px;
+}
+
+/* Mobile burger (hidden on desktop) */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+}
+
+.nav-burger span {
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform var(--speed) var(--ease), opacity var(--speed) var(--ease);
+}
+
+.nav-burger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-burger.is-open span:nth-child(2) { opacity: 0; }
+.nav-burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
+/* ============================================================
+   05. HERO — dual-intro split
+   ============================================================ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding-block: 8rem 4rem;
+}
+
+/* Soft dual-color ambient glows behind the hero */
+.hero__glow {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hero__glow--hw { background: var(--hardware-accent); top: 5%; left: -120px; }
+.hero__glow--sw { background: var(--software-accent); bottom: 0; right: -120px; }
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.hero__eyebrow {
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.9rem;
+}
+
+.hero__title {
+  font-size: clamp(2.6rem, 6.5vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  background: linear-gradient(90deg, var(--hardware-accent), var(--software-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.6rem;
+}
+
+/* Typing effect row: fixed-height so layout never jumps */
+.hero__role-wrap {
+  font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+  font-weight: 600;
+  color: var(--text-dim);
+  height: 2.2em;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.1rem;
+}
+
+.hero__typed { color: var(--text); }
+
+.hero__caret {
+  color: var(--software-accent);
+  font-weight: 700;
+  margin-left: 2px;
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}
+
+.hero__sub {
+  color: var(--text-dim);
+  max-width: 46ch;
+  margin-bottom: 1.75rem;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Terminal-style system line */
+.hero__sysline {
+  font-size: 0.82rem;
+  color: var(--text-faint);
+  line-height: 1.9;
+  border-left: 2px solid var(--border);
+  padding-left: 1rem;
+}
+
+
+/* Round profile portrait — perfect circle. Ring + glow +
+   photo all share the same 50% radius so they stay concentric. */
+.hero__portrait {
+  position: relative;
+  display: grid;
+  place-items: center;
+  justify-self: center;
+  width: min(300px, 70vw);
+  height: min(300px, 70vw);
+}
+
+/* Outer ambient glow (separate layer so it can bleed past
+   the portrait without inflating the ring's box) */
+.portrait-glow {
+  position: absolute;
+  inset: -9%;
+  border-radius: 50%;
+  background: conic-gradient(var(--hardware-accent), var(--software-accent), var(--hardware-accent));
+  filter: blur(42px);
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: -1;
+  animation: ring-spin 12s linear infinite;
+}
+
+/* Conic gradient ring (rotating) */
+.portrait-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 3px; /* ring thickness */
+  background: conic-gradient(var(--hardware-accent), var(--software-accent), var(--hardware-accent));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: ring-spin 12s linear infinite;
+  z-index: 0;
+}
+
+@keyframes ring-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Frame: circle that clips the photo; holds the shine sweep */
+.portrait-frame {
+  position: relative;
+  width: 92%;
+  height: 92%;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 6px solid var(--bg);
+  z-index: 1;
+}
+
+.portrait {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--bg-soft);
+  transition: transform 0.6s var(--ease);
+}
+
+/* Light-sweep shine that glides across the photo on hover */
+.portrait-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.35) 50%, transparent 80%);
+  transform: translateX(-120%);
+  pointer-events: none;
+  transition: transform 0.7s var(--ease);
+}
+
+.hero__portrait:hover .portrait { transform: scale(1.06); }
+.hero__portrait:hover .portrait-frame::after { transform: translateX(120%); }
+.hero__portrait:hover .portrait-caption {
+  color: var(--software-accent);
+  border-color: color-mix(in srgb, var(--software-accent) 50%, transparent);
+  box-shadow: 0 0 18px -6px var(--glow-sw);
+}
+
+.portrait-caption {
+  position: absolute;
+  bottom: 8%;
+  z-index: 2;
+  font-size: 0.72rem;
+  color: var(--text);
+  background: color-mix(in srgb, var(--bg-dark) 76%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.3em 0.85em;
+  backdrop-filter: blur(4px);
+  transition: color 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+
+
+/* ============================================================
+   06. ABOUT
+   ============================================================ */
+.about__block {
+  position: relative;
+  padding: 1.6rem 1.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+  transition: border-color var(--speed) var(--ease), box-shadow var(--speed) var(--ease);
+}
+
+/* Top accent strip per paragraph */
+.about__block::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+}
+
+.about__block--hw::before { background: var(--hardware-accent); }
+.about__block--sw::before { background: var(--software-accent); }
+
+.about__block:hover {
+  border-color: color-mix(in srgb, var(--hardware-accent) 40%, var(--border));
+  box-shadow: 0 12px 34px -18px var(--glow-hw);
+}
+
+.about__block--sw:hover {
+  border-color: color-mix(in srgb, var(--software-accent) 40%, var(--border));
+  box-shadow: 0 12px 34px -18px var(--glow-sw);
+}
+
+.about__label {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.05rem;
+  margin-bottom: 0.8rem;
+}
+
+.about__block p {
+  color: var(--text-dim);
+  max-width: 72ch;
+}
+
+.about__block strong { color: var(--text); }
+
+
+/* ============================================================
+   07. SKILLS MATRIX (two columns of animated bars)
+   ============================================================ */
+.skills__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.skills__col {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 1.6rem;
+}
+
+.skills__col--hw:hover { border-color: color-mix(in srgb, var(--hardware-accent) 45%, var(--border)); }
+.skills__col--sw:hover { border-color: color-mix(in srgb, var(--software-accent) 45%, var(--border)); }
+
+.skills__col-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1.4rem;
+}
+
+.skills__col-title .mono { font-weight: 500; }
+
+.skills__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.skill__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.45rem;
+}
+
+.skill__name { font-size: 0.9rem; font-weight: 500; }
+.skill__pct  { font-size: 0.78rem; color: var(--text-faint); }
+
+/* Bar: fill width is read from inline --pct, animated via JS */
+.skill__bar {
+  height: 7px;
+  border-radius: 99px;
+  background: var(--bg-soft);
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.skill__bar span {
+  display: block;
+  height: 100%;
+  width: 0; /* 0 until .in-view triggers the animation */
+  border-radius: inherit;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--hardware-accent) 70%, transparent), var(--hardware-accent));
+  transition: width 1.1s var(--ease), filter 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+
+.skills__col--sw .skill__bar span {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--software-accent) 70%, transparent), var(--software-accent));
+}
+
+/* Bar glow on hover */
+.skill:hover .skill__bar span {
+  filter: brightness(1.15);
+  box-shadow: 0 0 12px -2px var(--glow-hw);
+}
+
+.skills__col--sw .skill:hover .skill__bar span {
+  box-shadow: 0 0 12px -2px var(--glow-sw);
+}
+
+.skill:hover .skill__name { color: var(--text); }
+.skills__col--sw .skill:hover .skill__name,
+.skills__col--hw .skill:hover .skill__name { color: var(--text); }
+
+.skills__col--sw .skill__bar span { background: var(--software-accent); }
+
+.skills__col--hw.in-view .skill__bar span,
+.skills__col--sw.in-view .skill__bar span { width: var(--pct); }
+
+
+/* ============================================================
+   08. PORTFOLIO — filterable grid
+   ============================================================ */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.filter-btn {
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  transition: all var(--speed) var(--ease);
+}
+
+.filter-btn:hover {
+  border-color: var(--hardware-accent);
+  color: var(--text);
+}
+
+.filter-btn.is-active {
+  background: linear-gradient(90deg, var(--hardware-accent), var(--software-accent));
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 18px -8px var(--glow-hw);
+}
+
+.filter-btn:not(.is-active):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -10px var(--glow-hw);
+}
+
+.portfolio__count {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  margin-bottom: 1.6rem;
+}
+
+/* Grid: 3 columns on desktop, 2 on tablet, 1 on mobile */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+
+/* Filtering state — hidden cards are collapsed, not just faded */
+.project-card {
+  --card-glow: var(--glow-hw);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 var(--card-glow-size) var(--card-glow);
+  transition: transform var(--speed) var(--ease),
+              box-shadow var(--speed) var(--ease),
+              border-color var(--speed) var(--ease),
+              opacity var(--speed) var(--ease);
+}
+
+.project-card[data-category="software"] { --card-glow: var(--glow-sw); }
+
+.project-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 16px 44px -14px var(--card-glow), 0 0 32px -8px var(--card-glow);
+  border-color: color-mix(in srgb, var(--card-glow) 60%, var(--border));
+  background: color-mix(in srgb, var(--card-glow) 6%, var(--surface));
+}
+
+/* Accent-tinted top border + icon on hover */
+.project-card:hover .project-card__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--card-glow) 26%, transparent), transparent 55%);
+}
+
+/* Category badge tints on hover */
+.project-card[data-category="hardware"]:hover .project-card__badge {
+  background: color-mix(in srgb, var(--hardware-accent) 26%, var(--bg-dark));
+  color: #fff;
+}
+
+.project-card[data-category="software"]:hover .project-card__badge {
+  background: color-mix(in srgb, var(--software-accent) 26%, var(--bg-dark));
+  color: #fff;
+}
+
+.project-card.is-hidden {
+  display: none;
+}
+
+/* Entrance used when a filtered card appears */
+.project-card.is-appearing {
+  animation: card-pop 0.45s var(--ease) both;
+}
+
+@keyframes card-pop {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+.project-card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+
+.project-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+
+.project-card:hover .project-card__media img { transform: scale(1.08); }
+
+.project-card__badge {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  background: color-mix(in srgb, var(--bg-dark) 72%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+.project-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1.15rem 1.25rem 1.3rem;
+  flex: 1;
+}
+
+.project-card__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.project-card__desc {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  flex: 1;
+}
+
+.project-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.project-card__tags li {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.2em 0.6em;
+}
+
+.project-card__tags li:first-child {
+  color: var(--hardware-accent);
+  border-color: color-mix(in srgb, var(--hardware-accent) 45%, transparent);
+}
+
+.project-card[data-category="software"] .project-card__tags li:first-child {
+  color: var(--software-accent);
+  border-color: color-mix(in srgb, var(--software-accent) 45%, transparent);
+}
+
+.project-card__body .btn {
+  align-self: flex-start;
+  margin-top: 0.3rem;
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease),
+              background-color 0.35s var(--ease), border-color 0.35s var(--ease), color 0.35s var(--ease);
+}
+
+.project-card:hover .project-card__body .btn {
+  background: linear-gradient(135deg, var(--hardware-accent), var(--software-accent));
+  border-color: transparent;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px -8px var(--card-glow);
+}
+
+
+/* ============================================================
+   09. EXPERIENCE TIMELINE
+   ============================================================ */
+.timeline {
+  position: relative;
+  max-width: 760px;
+  padding-left: 2.1rem;
+}
+
+/* Vertical line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--hardware-accent) 0%, var(--software-accent) 100%);
+  opacity: 0.4;
+}
+
+.timeline__item {
+  position: relative;
+  padding-bottom: 1.8rem;
+}
+
+.timeline__item:last-child { padding-bottom: 0; }
+
+/* Node marker on the line */
+.timeline__marker {
+  position: absolute;
+  left: -2.1rem;
+  top: 0.45rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid var(--hardware-accent);
+  box-shadow: 0 0 12px var(--glow-hw);
+}
+
+.timeline__item--sw .timeline__marker {
+  border-color: var(--software-accent);
+  box-shadow: 0 0 12px var(--glow-sw);
+}
+
+.timeline__card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 1.3rem 1.5rem;
+  transition: transform var(--speed) var(--ease), box-shadow var(--speed) var(--ease), border-color var(--speed) var(--ease);
+}
+
+.timeline__item--hw .timeline__card:hover {
+  border-color: color-mix(in srgb, var(--hardware-accent) 45%, var(--border));
+  box-shadow: 0 12px 34px -18px var(--glow-hw);
+  transform: translateX(4px);
+}
+
+.timeline__item--sw .timeline__card:hover {
+  border-color: color-mix(in srgb, var(--software-accent) 45%, var(--border));
+  box-shadow: 0 12px 34px -18px var(--glow-sw);
+  transform: translateX(4px);
+}
+
+/* Pulsing node marker on hover */
+.timeline__item:hover .timeline__marker {
+  animation: marker-pulse 1.1s ease-out infinite;
+}
+
+@keyframes marker-pulse {
+  0%   { box-shadow: 0 0 0 0 var(--glow-hw); }
+  100% { box-shadow: 0 0 0 10px transparent; }
+}
+
+.timeline__item--sw:hover .timeline__marker {
+  animation: marker-pulse-sw 1.1s ease-out infinite;
+}
+
+@keyframes marker-pulse-sw {
+  0%   { box-shadow: 0 0 0 0 var(--glow-sw); }
+  100% { box-shadow: 0 0 0 10px transparent; }
+}
+
+.timeline__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.timeline__dates { font-size: 0.78rem; color: var(--text-faint); }
+
+.timeline__role {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.timeline__company {
+  font-weight: 500;
+  color: var(--text-dim);
+  font-size: 0.9em;
+}
+
+.timeline__desc {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-bottom: 0.7rem;
+  max-width: 60ch;
+}
+
+.timeline__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.timeline__tags li {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.2em 0.6em;
+}
+
+
+/* ============================================================
+   10. CONTACT
+   ============================================================ */
+.contact__inner { text-align: center; }
+
+.contact__inner .section__title { justify-content: center; }
+
+.contact__lede {
+  color: var(--text-dim);
+  max-width: 46ch;
+  margin: 0 auto 2.2rem;
+}
+
+.contact__channels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 720px;
+  margin: 0 auto 2.5rem;
+}
+
+.contact__card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-align: left;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: transform var(--speed) var(--ease), border-color var(--speed) var(--ease), box-shadow var(--speed) var(--ease);
+}
+
+.contact__card {
+  position: relative;
+  overflow: hidden;
+}
+
+.contact__card:hover {
+  transform: translateY(-4px);
+  border-color: var(--software-accent);
+  box-shadow: 0 12px 30px -16px var(--glow-sw);
+}
+
+/* Shine sweep across contact cards */
+.contact__card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  transform: translateX(-160%) skewX(-18deg);
+  pointer-events: none;
+  transition: transform 0.6s var(--ease);
+}
+
+.contact__card:hover::after { transform: translateX(320%) skewX(-18deg); }
+
+.contact__card-icon {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--hardware-accent);
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--hardware-accent) 40%, transparent);
+  border-radius: 10px;
+}
+
+.contact__card strong { display: block; font-size: 0.92rem; }
+.contact__card small  { color: var(--text-faint); font-size: 0.72rem; }
+
+.contact__footer {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+
+/* ============================================================
+   11. FOOTER
+   ============================================================ */
+.footer {
+  border-top: 1px solid var(--border);
+  padding-block: 1.6rem;
+  margin-top: 2rem;
+}
+
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem 1.25rem;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+
+.footer__brand { margin-right: auto; }
+
+/* Social icon links */
+.footer__socials {
+  display: flex;
+  gap: 0.6rem;
+  order: 3;
+  width: 100%;
+  justify-content: center;
+}
+
+.footer__social {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-dim);
+  transition: color var(--speed) var(--ease), border-color var(--speed) var(--ease), transform var(--speed) var(--ease), box-shadow var(--speed) var(--ease);
+}
+
+.footer__social svg { width: 18px; height: 18px; }
+
+.footer__social:hover {
+  color: var(--software-accent);
+  border-color: var(--software-accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px -10px var(--glow-sw);
+}
+
+.footer__top {
+  color: var(--text-dim);
+  transition: color var(--speed) var(--ease);
+}
+
+.footer__top:hover { color: var(--software-accent); }
+
+
+/* ============================================================
+   12. REVEAL-ON-SCROLL (Intersection Observer)
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: none;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero__caret,
+  .project-card.is-appearing { animation: none; }
+
+  .portrait-frame::after,
+  .contact__card::after { display: none; }
+
+  .timeline__item:hover .timeline__marker,
+  .timeline__item--sw:hover .timeline__marker { animation: none; }
+
+  .skill__bar span { transition: none; width: var(--pct) !important; }
+}
+
+
+/* ============================================================
+   13. RESPONSIVE — mobile-first breakpoints
+   ============================================================ */
+@media (max-width: 980px) {
+  .hero__grid { grid-template-columns: 1fr; gap: 2.2rem; }
+  /* Mobile: photo first, text below (desktop keeps text left / photo right) */
+  .hero__portrait { order: -1; }
+  .hero__intro { text-align: center; }
+  .hero__intro .hero__actions { justify-content: center; }
+  .hero__sysline { text-align: left; }
+  .hero__role-wrap { justify-content: center; }
+  .skills__grid { grid-template-columns: 1fr; }
+  .projects { grid-template-columns: repeat(2, 1fr); }
+  .contact__channels { grid-template-columns: 1fr; max-width: 420px; }
+}
+
+@media (max-width: 720px) {
+  .projects { grid-template-columns: 1fr; }
+
+  /* ---- Mobile hamburger menu ----
+     The mobile drawer is the SAME element as the desktop link
+     row, restyled. To keep the open state robust we rely on
+     the .navbar__links.is-open class coming AFTER the base
+     styles in this file (source order wins at equal
+     specificity) — no !important needed. */
+  .nav-burger { display: flex; }
+
+  .navbar__links {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 1.25rem 1rem;
+    transform: translateY(-110%);
+    opacity: 0;
+    visibility: hidden; /* keyboard/Screen-reader safe while closed */
+    transition: transform var(--speed) var(--ease), opacity var(--speed) var(--ease), visibility 0s linear var(--speed);
+    box-shadow: 0 24px 40px -20px rgba(0, 0, 0, 0.4);
+  }
+
+  .navbar__links.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    transition: transform var(--speed) var(--ease), opacity var(--speed) var(--ease);
+  }
+
+  .navbar__links li + li { border-top: 1px dashed var(--border); }
+
+  .nav-link {
+    display: block;
+    padding: 0.85rem 0.25rem;
+    font-size: 1rem;
+  }
+}
