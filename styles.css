@@ -1108,7 +1108,7 @@ button {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  max-width: 720px;
+  max-width: 920px;
   margin: 0 auto 2.5rem;
 }
 
